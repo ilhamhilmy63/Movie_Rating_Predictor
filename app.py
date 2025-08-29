@@ -1,5 +1,7 @@
 import streamlit as st
 import joblib
+import numpy as np
+
 
 # Load model
 model = joblib.load("model.pkl")
@@ -17,6 +19,7 @@ genre = st.selectbox("Genre", ["Action", "Comedy", "Drama", "Horror", "Romance"]
 genre_encoded = {"Action":0, "Comedy":1, "Drama":2, "Horror":3, "Romance":4}[genre]
 
 if st.button("Predict Rating"):
-    features = [[runtime, budget, popularity, genre_encoded]]
+    features = np.array([[runtime, budget, popularity]])  # shape (1,3)
     prediction = model.predict(features)
     st.success(f"⭐ Predicted Rating: {prediction[0]:.2f}")
+
